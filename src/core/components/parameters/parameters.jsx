@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { Map, List } from "immutable"
 import ImPropTypes from "react-immutable-proptypes"
+import { isEventMethod, isSubMethod } from "../../../helpers/check-method"
 
 export default class Parameters extends Component {
 
@@ -115,7 +116,7 @@ export default class Parameters extends Component {
     const Callbacks = getComponent("Callbacks", true)
     const RequestBody = getComponent("RequestBody", true)
 
-    const isExecute = tryItOutEnabled && allowTryItOut
+    const isExecute = tryItOutEnabled && allowTryItOut && !isEventMethod(pathMethod)
     const isOAS3 = specSelectors.isOAS3()
 
 
@@ -164,7 +165,7 @@ export default class Parameters extends Component {
               onResetClick={() => oas3Actions.setRequestBodyValue({ value: undefined, pathMethod })}/>
           ) : null}
         </div>
-        {this.state.parametersVisible ? <div className="parameters-container">
+        {this.state.parametersVisible && !isEventMethod(pathMethod) ? <div className="parameters-container">
           {!groupedParametersArr.length ? <div className="opblock-description-wrapper"><p>No parameters</p></div> :
             <div className="table-container">
               <table className="parameters">
@@ -211,8 +212,7 @@ export default class Parameters extends Component {
           isOAS3 && requestBody && this.state.parametersVisible &&
           <div className="opblock-section opblock-section-request-body">
             <div className="opblock-section-header">
-              <h4 className={`opblock-title parameter__name ${requestBody.get("required") && "required"}`}>Request
-                body</h4>
+              <h4 className={`opblock-title parameter__name ${requestBody.get("required") && "required"}`}>{isSubMethod(pathMethod) ? 'Payload' : 'Request body'}</h4>
               <label>
                 <ContentType
                   value={oas3Selectors.requestContentType(...pathMethod)}
@@ -220,7 +220,7 @@ export default class Parameters extends Component {
                   onChange={(value) => {
                     this.onChangeMediaType({ value, pathMethod })
                   }}
-                  className="body-param-content-type" 
+                  className="body-param-content-type"
                   ariaLabel="Request content type" />
               </label>
             </div>

@@ -5,6 +5,7 @@ import cx from "classnames"
 import { fromJS, Seq, Iterable, List, Map } from "immutable"
 import { getExtensions, getSampleSchema, fromJSOrdered, stringify } from "core/utils"
 import { getKnownSyntaxHighlighterLanguage } from "core/utils/jsonParse"
+import { mapResponseToEvent } from "../../helpers/check-method"
 
 
 const getExampleComponent = ( sampleResponse, HighlightCode, getConfigs ) => {
@@ -176,7 +177,7 @@ export default class Response extends React.Component {
     return (
       <tr className={ "response " + ( className || "") } data-code={code}>
         <td className="response-col_status">
-          { code }
+          { mapResponseToEvent(method, code) }
         </td>
         <td className="response-col_description">
 

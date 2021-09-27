@@ -372,7 +372,6 @@
     }
 
 
-
     &.opblock-post
     {
         @include method($_color-post);
@@ -413,6 +412,16 @@
         opacity: .6;
 
         @include method($_color-disabled);
+    }
+
+    &.opblock-req
+    {
+        @include method($_color-req);
+    }
+
+    &.opblock-sub
+    {
+        @include method($_color-sub);
     }
 
     .opblock-schemes
@@ -499,6 +508,17 @@
         &.active
         {
             font-weight: bold;
+        }
+
+        button.tablinks
+        {
+            background: none;
+            border: 0;
+            padding: 0;
+
+            color: inherit;
+            font-family: inherit;
+            font-weight: inherit;
         }
     }
 }
@@ -865,11 +885,6 @@
 .float-right
 {
     float: right;
-}
-
-img.full-width
-{
-    width: 100%;
 }
 
 .svg-assets
