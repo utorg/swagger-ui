@@ -13,7 +13,7 @@ sed -i "s|\$\$VERSION|$UI_VERSION|g" package.json
 cp ../dist/* .
 
 if [ "$PUBLISH_DIST" = "true" ] || [ "$TRAVIS" = "true" ] ; then
-  npm publish .
+  npm publish --access public .
 else
   npm pack .
 fi
